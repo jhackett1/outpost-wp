@@ -20,7 +20,17 @@ function op_set_service_columns($columns) {
 }
 add_filter( 'manage_service_posts_columns', 'op_set_service_columns' );
 
-
+function nested_object_list($name, $post_id){
+  $objects = get_field($name, $post_id);
+  if($objects){
+    $list = array_map(function ($post){
+      return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
+    }, $objects);
+    echo join(", ", $list);
+  } else {
+    echo "—";
+  }
+}
 
 function op_custom_admin_columns( $column, $post_id ) {
   switch ( $column ) {
@@ -35,51 +45,19 @@ function op_custom_admin_columns( $column, $post_id ) {
       break;
 
     case 'locations':
-      $locations = get_field('locations', $post_id);
-      if($locations){
-        $list = array_map(function ($post){
-          return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-        }, $locations);
-        echo join(", ", $list);
-      } else {
-        echo "—";
-      }
+      nested_object_list("locations", $post_id);
       break;
 
     case 'contacts':
-      $contacts = get_field('contacts', $post_id);
-      if($contacts){
-        $list = array_map(function ($post){
-          return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-        }, $contacts);
-        echo join(", ", $list);
-      } else {
-        echo "—";
-      }
+      nested_object_list("contacts", $post_id);
       break;
 
     case 'schedules':
-      $schedules = get_field('schedules', $post_id);
-      if($schedules){
-        $list = array_map(function ($post){
-          return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-        }, $locations);
-        echo join(", ", $list);
-      } else {
-        echo "—";
-      }
+      nested_object_list("schedules", $post_id);
       break;
 
     case 'fees':
-      $fees = get_field('fees', $post_id);
-      if($fees){
-        $list = array_map(function ($post){
-          return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-        }, $locations);
-        echo join(", ", $list);
-      } else {
-        echo "—";
-      }
+      nested_object_list("fees", $post_id);
       break;
 
     case 'services':
@@ -92,7 +70,6 @@ function op_custom_admin_columns( $column, $post_id ) {
           )
         )
       ));
-
       $list = array_map(function ($post){
         return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
       }, $query->get_posts());
