@@ -20,13 +20,25 @@ function op_set_service_columns($columns) {
 }
 add_filter( 'manage_service_posts_columns', 'op_set_service_columns' );
 
+function op_set_location_columns($columns) {
+  unset($columns["date"]);
+  unset($columns["author"]);
+  unset($columns["taxonomy-accessibility"]);
+  $columns['address'] = 'Address';
+  $columns['author'] = 'Author';
+  $columns['parent_service'] = 'Parent service';
+  $columns['taxonomy-accessibility'] = 'Accessibility';
+  $columns['date'] = 'Date';
+  return $columns;
+}
+add_filter( 'manage_location_posts_columns', 'op_set_location_columns' );
+
 function op_add_parent_service_column($columns) {
   unset($columns["date"]);
   $columns['parent_service'] = 'Parent service';
   $columns['date'] = 'Date';
   return $columns;
 }
-add_filter( 'manage_location_posts_columns', 'op_add_parent_service_column' );
 add_filter( 'manage_schedule_posts_columns', 'op_add_parent_service_column' );
 add_filter( 'manage_cost_option_posts_columns', 'op_add_parent_service_column' );
 add_filter( 'manage_contact_posts_columns', 'op_add_parent_service_column' );
@@ -49,6 +61,10 @@ function op_custom_admin_columns( $column, $post_id ) {
       } else {
         echo "—";
       }
+      break;
+
+    case 'address':
+      echo get_field("location", $post_id)["address"];
       break;
 
     case 'locations':

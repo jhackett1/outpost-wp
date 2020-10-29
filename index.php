@@ -17,3 +17,9 @@ require "inc/custom-fields.php";
 require "inc/admin-columns.php";
 
 require "api/index.php";
+
+
+function my_acf_init() {
+    acf_update_setting('google_api_key', GOOGLE_CLIENT_KEY);
+}
+add_action('acf/init', 'my_acf_init');
