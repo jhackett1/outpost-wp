@@ -1,5 +1,6 @@
 <?php
 
+require "serializers.php";
 require "services_controller.php";
 
 add_action("rest_api_init", function(){

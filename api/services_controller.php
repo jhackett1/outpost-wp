@@ -1,31 +1,29 @@
 <?php
 
-require "serializers.php";
+add_filter('posts_orderby', 'handle_geo_ordering', 10, 2);
 
-function handle_location_search($query) {
-    if ( array_key_exists("location_query", $query->query_vars) ) {
-        // what now?
+function handle_geo_ordering($orderby_statement, $query) {
+    if($query->get("orderby") == "geo"){
+        $orderby_statement = "FUCK";
     }
+    return $orderby_statement;
 }
-add_action( 'pre_get_posts', 'handle_location_search' );
 
 
 function op_services_index_controller($data){
-    $query = new WP_Query(array(
-        "location" => array(
-            "longitude" => "foo",
-            "latitude" => "foo"
-        ),
+
+    $args = array(
+        // "orderby" => "geo",
         "post_type" => "service",
         "posts_per_page" => $data->get_param("per_page"),
         "paged" => $data->get_param("page"),
         "s" => $data->get_param("text")
-    ));
+    );
 
-    return $query->query_vars;
+    $query = new WP_Query($args);
 
     return array(
-        "page" => $data->get_param("page"),
+        "page" => $data->get_param("page") ? $data->get_param("page") : 1,
         "size" => $query->post_count,
         "totalPages" => $query->max_num_pages,
         "totalElements" => $query->found_posts,
@@ -34,7 +32,6 @@ function op_services_index_controller($data){
         }, $query->get_posts())
     );
 }
-
 
 
 function op_services_show_controller($data){
