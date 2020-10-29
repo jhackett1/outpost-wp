@@ -32,19 +32,10 @@ add_filter( 'manage_cost_option_posts_columns', 'op_add_parent_service_column' )
 add_filter( 'manage_contact_posts_columns', 'op_add_parent_service_column' );
 
 
-function nested_object_list($name, $post_id){
-  $query = new WP_Query(array(
-    "post_type" => $name,
-    "meta_query" => array(
-      array(
-        "key" => "service",
-        "value" => $post_id
-      )
-    )
-  ));
+function nested_object_list($post_type, $service_id){
   $list = array_map(function ($post){
     return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-  }, $query->get_posts());
+  }, posts_belonging_to_service($post_type, $service_id));
   echo join(", ", $list);
 }
 
@@ -61,19 +52,19 @@ function op_custom_admin_columns( $column, $post_id ) {
       break;
 
     case 'locations':
-      nested_object_list("locations", $post_id);
+      nested_object_list("location", $post_id);
       break;
 
     case 'contacts':
-      nested_object_list("contacts", $post_id);
+      nested_object_list("contact", $post_id);
       break;
 
     case 'schedules':
-      nested_object_list("schedules", $post_id);
+      nested_object_list("schedule", $post_id);
       break;
 
     case 'cost_option':
-      nested_object_list("fees", $post_id);
+      nested_object_list("cost_option", $post_id);
       break;
 
     case 'parent_service':
