@@ -50,13 +50,13 @@ function op_custom_post_types_init() {
         "supports" => array("title", "revisions", "author")
     ));
 
-    register_post_type("review", array(
-        "label" => __("Reviews"),
-        "public" => false,
-        "show_ui" => true,
-        "menu_icon" => "dashicons-format-chat",
-        "supports" => array("title")
-    ));
+    // register_post_type("review", array(
+    //     "label" => __("Reviews"),
+    //     "public" => false,
+    //     "show_ui" => true,
+    //     "menu_icon" => "dashicons-format-chat",
+    //     "supports" => array("title")
+    // ));
 
 }
 add_action("init", "op_custom_post_types_init");

@@ -20,16 +20,32 @@ function op_set_service_columns($columns) {
 }
 add_filter( 'manage_service_posts_columns', 'op_set_service_columns' );
 
+function op_add_parent_service_column($columns) {
+  unset($columns["date"]);
+  $columns['parent_service'] = 'Parent service';
+  $columns['date'] = 'Date';
+  return $columns;
+}
+add_filter( 'manage_location_posts_columns', 'op_add_parent_service_column' );
+add_filter( 'manage_schedule_posts_columns', 'op_add_parent_service_column' );
+add_filter( 'manage_cost_option_posts_columns', 'op_add_parent_service_column' );
+add_filter( 'manage_contact_posts_columns', 'op_add_parent_service_column' );
+
+
 function nested_object_list($name, $post_id){
-  $objects = get_field($name, $post_id);
-  if($objects){
-    $list = array_map(function ($post){
-      return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
-    }, $objects);
-    echo join(", ", $list);
-  } else {
-    echo "—";
-  }
+  $query = new WP_Query(array(
+    "post_type" => $name,
+    "meta_query" => array(
+      array(
+        "key" => "service",
+        "value" => $post_id
+      )
+    )
+  ));
+  $list = array_map(function ($post){
+    return "<a href='" . get_edit_post_link($post) . "'>" . get_the_title($post) . "</a>";
+  }, $query->get_posts());
+  echo join(", ", $list);
 }
 
 function op_custom_admin_columns( $column, $post_id ) {
@@ -56,8 +72,17 @@ function op_custom_admin_columns( $column, $post_id ) {
       nested_object_list("schedules", $post_id);
       break;
 
-    case 'fees':
+    case 'cost_option':
       nested_object_list("fees", $post_id);
+      break;
+
+    case 'parent_service':
+      $parent = get_field('service', $post_id);
+      if(get_post($parent)){
+        echo "<a href='" . get_edit_post_link($parent) . "'>" . get_the_title($parent) . "</a>";
+      } else {
+        echo "—";
+      }
       break;
 
     case 'services':
@@ -75,7 +100,6 @@ function op_custom_admin_columns( $column, $post_id ) {
       }, $query->get_posts());
       echo join(", ", $list);
       break;
-
   }
 }
 add_action( 'manage_posts_custom_column' , 'op_custom_admin_columns', 10, 2 );

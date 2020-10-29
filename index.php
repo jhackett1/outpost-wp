@@ -9,6 +9,8 @@ Plugin URI: wearefuturegov.com
 
 require "inc/check-dependencies.php";
 
+require "inc/utils.php";
+
 require "inc/post-types.php";
 require "inc/taxonomies.php";
 require "inc/custom-fields.php";
