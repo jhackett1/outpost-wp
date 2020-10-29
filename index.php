@@ -12,5 +12,6 @@ require "inc/check-dependencies.php";
 require "inc/post-types.php";
 require "inc/taxonomies.php";
 require "inc/custom-fields.php";
+require "inc/admin-columns.php";
 
 require "api/index.php";
