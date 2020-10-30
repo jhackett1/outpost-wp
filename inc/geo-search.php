@@ -12,7 +12,6 @@ function handle_geo_select($select_clause, $query) {
             wp_posts.*,
             wp_geo.latitude AS latitude,
             wp_geo.longitude AS longitude,
-
             ( $radius * acos(
                 cos( radians( $lat ) )
                 * cos( radians( latitude ) )

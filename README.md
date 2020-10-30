@@ -91,3 +91,9 @@ Other features that might be interesting to add:
 
 - Adding coverage areas to services, rather than just point locations
 - Adding admin notes and end-user reviews to services
+
+
+## To do list
+
+- Add taxonomy filtering to the /services API endpoint
+- Add front-end search widgets?
