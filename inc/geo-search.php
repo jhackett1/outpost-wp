@@ -29,14 +29,11 @@ add_filter('posts_fields','handle_geo_select', 10, 2);
 function handle_geo_joins($join_clause, $query) {
     if($query->get("geo_query")){
         $join_clause = "       
-            INNER JOIN wp_postmeta AS services_locations
+            JOIN wp_postmeta AS services_locations
             ON wp_posts.ID = services_locations.meta_value
 
-            INNER JOIN wp_posts AS locations
-            ON services_locations.post_id = locations.ID
-
-            INNER JOIN wp_geo
-            ON locations.id = wp_geo.post_id
+            JOIN wp_geo
+            ON services_locations.post_id  = wp_geo.post_id
         ";
     }
 	return $join_clause;	
