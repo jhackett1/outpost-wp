@@ -15,7 +15,10 @@ add_action("rest_api_init", function(){
             "per_page" => array(
                 "sanitize_callback" => function($val){ return intval($val); } 
             ),
-            "text"
+            "text",
+            "location",
+            "latitude",
+            "longitude"
         )
     ));
 

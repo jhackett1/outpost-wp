@@ -17,6 +17,8 @@ require "inc/taxonomies.php";
 require "inc/custom-fields.php";
 require "inc/admin-columns.php";
 require "inc/location-save-hooks.php";
+require "inc/geocoder.php";
+require "inc/geo-search.php";
 
 require "api/index.php";
 

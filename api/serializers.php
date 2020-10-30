@@ -74,6 +74,8 @@ function service_serializer($post){
 
         "regular_schedules" => array_map(function($schedules){ 
             return schedule_serializer($schedules); 
-        }, posts_belonging_to_service("schedule", $post->ID))
+        }, posts_belonging_to_service("schedule", $post->ID)),
+
+        "distance" => $post->distance
     );
 }
