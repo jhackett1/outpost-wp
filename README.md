@@ -69,3 +69,18 @@ Add a line like this to your `wp-config.php` before the `/* That's all, stop edi
 ```
 define("GOOGLE_CLIENT_KEY", "your api key here");
 ```
+
+## Performance
+
+Because the OpenReferral standard recommends splitting information across many post types, the database queries used by the API endpoints make a lot of `JOINS` which can become slow if your dataset is very large, or if you're applying lots of filters.
+
+You can improve this by using an API caching plugin, though some filtered requests are too rare to be effectively cached.
+
+In very large or complex applications, it might be worthwhile to build an Elasticsearch index ([example](https://kinsta.com/knowledgebase/wordpress-elasticsearch/)) and query that instead.
+
+
+## Serving suggestion
+
+| [Relevanssi](https://wordpress.org/plugins/relevanssi/) | By default, WordPress searches post title and content using the simple LIKE operator, and sorts by publication date. Relevanssi lets you sort by relevance and include custom field values in the search. |
+|---------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Members](https://wordpress.org/plugins/members/)       | If you want to use the site to encourage service providers to manage their own listings, you might need to define custom user roles, which this plugin does well.                                         |
