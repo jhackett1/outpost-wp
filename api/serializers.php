@@ -11,15 +11,16 @@ function location_serializer($post){
     return array(
         "id" => $post->ID,
         "name" => $post->post_title,
-        "latitude" => "",
-        "longitude" => "",
-        "physical_address" => array(
-            "address_1" => "",
-            "city" => "",
-            "country" => "",
-            "postal_code" => "",
-            "state_province" => ""
-        )
+        get_field("location", $post),
+        // "latitude" => get_field("location", $post),
+        // "longitude" => get_field("location", $post),
+        // "physical_address" => array(
+        //     "address_1" => "",
+        //     "city" => "",
+        //     "country" => "",
+        //     "postal_code" => "",
+        //     "state_province" => ""
+        // )
     );
 }
 
