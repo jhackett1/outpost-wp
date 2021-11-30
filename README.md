@@ -17,7 +17,7 @@ It will set up a number of new post types and taxonomies:
 
 It will also create extra fields for adding information to each of these.
 
-You can use built-in WordPress features like user roles, approval workflows and revisions to keep on top of this contwent
+You can use built-in WordPress features like user roles, approval workflows and revisions to keep on top of this content.
 
 ### API endpoints
 
